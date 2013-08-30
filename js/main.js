@@ -5,6 +5,14 @@ function addCards(Ccolumn,newNumber,Current){
 			Ncard.setAttribute('id',"card"+Current.cards);
 			Ncard.setAttribute("class","card");
 			Ccolumn.appendChild(Ncard);
+
+			var Ntitle = document.createElement('div');
+			Ntitle.setAttribute("class","titleText");
+			Ncard.appendChild(Ntitle);
+
+			var Nimage = document.createElement('img');
+			Nimage.setAttribute("class","titleImage");
+			Ncard.appendChild(Nimage);
 		};
 }
 
@@ -66,27 +74,52 @@ function CheckScreenColumns(Current){
 	else if($(window).height()>=1000){
 		addColumns(5,Current);
 	}
+
+	GetandSetRedditData(Current);
 }
 
 function ResizeHandle(){
 
 
-	if($(window).width() > Current.refWidth+200 || $(window).width() < Current.refWidth ){
+	if($(window).width() > Current.refWidth+200 || $(window).width() < Current.refWidth || $(window).height() > Current.refHeight+200 || $(window).height() < Current.refHeight){
 
 		Current.refWidth=Math.floor($(window).width()/200)*200;
 	    Current.refHeight=Math.floor($(window).height()/200)*200;
-
 		var TNode = document.getElementById("wrapper");
 		TNode.innerHTML = '';
-
+	    Current.columns = 0;
+	    Current.cards = 0;
 		CheckScreenColumns(Current);
 	}
 }
 
+function GetandSetRedditData(Current){
+	$.getJSON('http://www.reddit.com/.json?jsonp=?',
+    function(data){
+        result=data.data.children;
+        // console.log(result.length);
+        for (var i = 1; i < Current.cards+1; i++) {
+            	console.log(result[i-1].data.title);
+            	var Card = document.getElementById("card"+i);
+            	Card.firstChild.innerHTML = result[i-1].data.title;
+
+            	var imgSource = result[i-1].data.thumbnail;
+
+            	if(imgSource == "self" || imgSource == ""){
+            		Card.removeChild(Card.lastChild);
+            		Card.firstChild.className = Card.firstChild.className + "full";
+            	} else{
+
+            	Card.lastChild.setAttribute("src",result[i-1].data.thumbnail);}
+            	console.log(result[i-1].data.thumbnail);
+            };    
+        });
+}
+
 window.onload=function(){
 	Current = new Object();
-	Current.columns = 0
-	Current.cards = 0
+	Current.columns = 0;
+	Current.cards = 0;
 	Current.refWidth=Math.floor($(window).width()/200)*200;
 	Current.refHeight=Math.floor($(window).height()/200)*200;
 
@@ -96,10 +129,10 @@ window.onload=function(){
 	CheckScreenColumns(Current);
 
 	window.addEventListener("resize",ResizeHandle,false);
-	
 // $.getJSON('http://www.reddit.com/.json?jsonp=?',
 //     function(data){
 //         result=data.data.children;
+//         console.log(result.length);
 //     });
 
 

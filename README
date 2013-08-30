@@ -2,7 +2,8 @@ This proyect is meant to be a web based Reddit reader better meant for small scr
 
 The idea is for every post to be a "card" and every screen size has an adaptative number of cards.
 
-The proyect is in a VERY early stage. So far all I have done is play around with the user interface to make it adapt to every screen.
+The proyect is in a VERY early stage. The basic user interface is done and I am currently working on making it display Reddit content
 
 Things to do next:
--Make the adaptative interface work vertically
+-Clicking on a post should open said post (Maybe in a webview?)
+-Swipe left or right should load more posts

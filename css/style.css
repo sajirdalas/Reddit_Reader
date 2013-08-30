@@ -33,6 +33,28 @@ body{
   border-radius: 5px;
 }
 
+.titleText{
+  margin-top: 10px;
+  margin-left: 10px;
+  height: 90%;
+  width: 40%;
+  float: left;
+  text-align: center;
+
+}
+
+.full{
+  width: 90%;
+}
+
+.titleImage{
+  margin-top: 40px;
+  margin-left: 15%;
+  height: auto;
+  width: 30%;
+  float: left;
+}
+
 /*Media queries*/
 
 /*Width related*/
